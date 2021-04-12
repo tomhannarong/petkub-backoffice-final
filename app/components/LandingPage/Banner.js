@@ -28,8 +28,8 @@ function Banner(props) {
     >
       {!slideMode && <BannerParallax />}
       <div className={!slideMode ? classes.container : ''}>
-        <Typography component="h2" variant="h2" gutterBottom>Dandelion Pro</Typography>
-        <Typography component="p" variant="h5" gutterBottom>A React.js Website Template </Typography>
+        <Typography component="h2" variant="h2" gutterBottom>Petkub Management</Typography>
+        <Typography component="p" variant="h5" gutterBottom>For Admin Team </Typography>
         <div className={classes.btnArea}>
           <Button
             size="large"
@@ -38,7 +38,7 @@ function Banner(props) {
             href={link.buy}
             target="_blank"
           >
-            Buy Now
+            petkub.com
           </Button>
           <Button
             size="large"
@@ -48,7 +48,7 @@ function Banner(props) {
             component={Link}
             to={link.dashboard}
           >
-            See Demo
+            login for admin
           </Button>
         </div>
         <div className={classes.previewApp}>
@@ -58,7 +58,7 @@ function Banner(props) {
             </div>
           </Hidden>
           <div className={classNames(classes.m1, classes.screen)}>
-            <img src="/images/screen/personal.jpg" alt="personal dashboard" />
+            <img src="https://blogtienao.com/wp-content/uploads/2021/01/nhin-vao-so-lieu-nay-bao-sao-Dogecoin-khong-tang-800.jpg" alt="personal dashboard" />
           </div>
           <Hidden smDown>
             <div className={classNames(classes.m3, classes.screen, slideMode ? classes.bottom : '')}>

@@ -36,12 +36,10 @@ function Header(props) {
   const gradient = useSelector(state => state.getIn([reducer, 'gradient']));
 
   const menuList = [
-    createData('feature', '#feature'),
-    createData('showcase', '#showcase'),
-    createData('testimonials', '#testimonials'),
-    createData('technology', '#tech'),
-    createData('pricing', '#pricing'),
-    createData('contact', '#contact'),
+    createData('find', '/find'),
+    createData('found', '/found'),
+    createData('free', '/free'),
+    createData('login for admin', '/loginforadmin'),
   ];
 
   const toggleDrawerOpen = () => {
@@ -90,7 +88,7 @@ function Header(props) {
             </NavLink>
             <Hidden mdDown>
               <nav>
-                <Scrollspy items={['feature', 'showcase', 'testimonials', 'tech', 'pricing', 'contact']} currentClassName="active">
+                <Scrollspy items={['find', 'found', 'free', 'login for admin']} currentClassName="active">
                   {menuList.map(item => (
                     <li key={item.id.toString()}>
                       <Button component={AnchorLink} href={item.url}>{item.name}</Button>

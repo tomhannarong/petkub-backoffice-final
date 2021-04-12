@@ -38,12 +38,12 @@ function SideNavMobile(props) {
       </div>
       <div className={classNames(classes.menuContainer, classes.landingNav, classes.rounded)}>
         <List className={classes.dense} component="nav">
-          <Scrollspy items={['feature', 'showcase', 'testimonials', 'tech', 'pricing', 'contact']} currentClassName={classes.active}>
+          <Scrollspy items={['find', 'found', 'free', 'loginforadmin']} currentClassName={classes.active}>
             {getMenus}
           </Scrollspy>
         </List>
         <Typography variant="caption" className={classes.copyright}>
-          &copy; 2020 Dandelion Designs
+          &copy; 2021 Petkub Development
           <br />
             All Right Reserved
         </Typography>

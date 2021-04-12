@@ -24,13 +24,10 @@ function SideNav(props) {
 
   const anchor = 'left';
   const menuList = [
-    createData(0, 'Home', '#banner'),
-    createData(1, 'Feature', '#feature'),
-    createData(2, 'Showcase', '#showcase'),
-    createData(3, 'Testimonials', '#testimonials'),
-    createData(4, 'Technology', '#tech'),
-    createData(5, 'Pricing', '#pricing'),
-    createData(6, 'Contact', '#contact'),
+    createData(0, 'find', '/find'),
+    createData(1, 'found', '/found'),
+    createData(2, 'free', '/free'),
+    createData(3, 'loginforadmin', '/loginforadmin'),
   ];
 
   return (

@@ -39,12 +39,10 @@ const DecorationStyled = withStyles(styles)(Decoration);
 function Footer(props) {
   const { classes } = props;
   const menuList = [
-    createData('feature', '#feature'),
-    createData('showcase', '#showcase'),
-    createData('terstimonials', '#testi'),
-    createData('technology', '#tech'),
-    createData('pricing', '#pricing'),
-    createData('contact', '#contact'),
+    createData('find', '/find'),
+    createData('found', '/found'),
+    createData('free', '/free'),
+    createData('login for admin', '/loginforadmin'),
   ];
 
   return (
@@ -69,7 +67,7 @@ function Footer(props) {
       </div>
       <div className={classes.copyright}>
         <div className={classes.container}>
-          <p>&copy; 2020 Dandelion Designs. All Right Reserved </p>
+          <p>&copy; 2021 Petkub Development. All Right Reserved </p>
           <span>
             <IconButton color="primary" className={classes.button} href={link.twitter} target="_blank"><i className="ion-social-twitter" /></IconButton>
             <IconButton color="primary" className={classes.button} href={link.pinterest} target="_blank"><i className="ion-social-pinterest" /></IconButton>
