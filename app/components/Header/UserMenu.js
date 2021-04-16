@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -22,13 +22,22 @@ import dummy from 'dan-api/dummy/dummyContents';
 import messageStyles from 'dan-styles/Messages.scss';
 import avatarApi from 'dan-api/images/avatars';
 import link from 'dan-api/ui/link';
+import { useMutation } from '@apollo/client';
 import styles from './header-jss';
+
+import { setCookie, removeCookie, getCookie } from '../../utils/cookie';
+import { SIGN_OUT } from '../../apollo/mutations';
+import { AuthContext } from '../../context/AuthContextProvider';
 
 function UserMenu(props) {
   const [menuState, setMenuState] = useState({
     anchorEl: null,
     openMenu: null
   });
+
+  const { loggedInUser, setAuthUser } = useContext(AuthContext);
+
+  const [signout] = useMutation(SIGN_OUT);
 
   const handleMenu = menu => (event) => {
     const { openMenu } = menuState;
@@ -40,6 +49,32 @@ function UserMenu(props) {
 
   const handleClose = () => {
     setMenuState({ anchorEl: null, openMenu: null });
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await signout();
+      if (response.data) {
+        if (!loggedInUser) console.log('loggedInUser: null');
+        if (!loggedInUser) console.log('Date.now().toString()');
+
+        // Set auth user to null
+        setAuthUser(null);
+
+        // Sync signout
+        window.localStorage.setItem('signout', Date.now().toString());
+
+        removeCookie('accessToken');
+        removeCookie('refreshToken');
+
+        alert('Logout Message: ' + response.data.signout.message);
+
+        // Push user to landing page
+        window.location.href = '/';
+      }
+    } catch (error) {
+      throw error;
+    }
   };
 
   const { classes, dark } = props;
@@ -158,7 +193,7 @@ function UserMenu(props) {
           </ListItemIcon>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose} component={Link} to="/">
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <ExitToApp />
           </ListItemIcon>

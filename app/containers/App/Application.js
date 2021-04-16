@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import { ThemeContext } from './ThemeWrapper';
 import Dashboard from '../Templates/Dashboard';
 import {
@@ -34,9 +35,36 @@ import {
   TrafficIndicator, StreetViewMap, NotFound
 } from '../pageListAsync';
 
+import { AuthContext } from '../../context/AuthContextProvider';
+import { isSuperAdmin, isAdmin } from '../../helpers/authHelpers';
+import { ME } from '../../apollo/queries';
+
 function Application(props) {
   const { history } = props;
+  const { loggedInUser, setAuthUser } = useContext(AuthContext);
   const changeMode = useContext(ThemeContext);
+  const [IsAuthContextIf, setIsAuthContextIf] = useState(false);
+
+  setInterval(() => {
+    setIsAuthContextIf(true);
+  }, 500);
+
+  // Check user admin login success.
+  useEffect(() => {
+    try {
+      if (IsAuthContextIf) {
+        if (loggedInUser) {
+          console.log('loggedInUser: ', loggedInUser);
+        }
+        if (!loggedInUser) {
+          window.location.href = '/';
+        }
+      }
+    } catch (error) {
+      throw error;
+    }
+  }, [IsAuthContextIf]);
+
   return (
     <Dashboard history={history} changeMode={changeMode}>
       <Switch>

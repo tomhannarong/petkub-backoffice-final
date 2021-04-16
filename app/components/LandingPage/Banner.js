@@ -11,6 +11,7 @@ import link from 'dan-api/ui/link';
 import styles from './landingStyle-jss';
 import BannerParallax from './BannerParallax';
 
+
 function Banner(props) {
   const { classes, slideMode } = props;
 
@@ -46,9 +47,12 @@ function Banner(props) {
             color="secondary"
             className={classes.button}
             component={Link}
-            to={link.dashboard}
+            // to={link.dashboard}
+            to={link.login}
           >
-            login for admin
+            login for admin2
+            {' '}
+            {process.env.REACT_APP_WEBSITE_NAME}
           </Button>
         </div>
         <div className={classes.previewApp}>

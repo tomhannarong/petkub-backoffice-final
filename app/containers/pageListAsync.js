@@ -289,28 +289,9 @@ export const RadarPolarCharts = loadable(() =>
   });
 
 // Pages
-export const Login = loadable(() =>
-  import ('./Pages/Users/Login'), {
-    fallback: <Loading />,
-  });
+
 export const LoginV2 = loadable(() =>
   import ('./Pages/Users/LoginV2'), {
-    fallback: <Loading />,
-  });
-export const LoginV3 = loadable(() =>
-  import ('./Pages/Users/LoginV3'), {
-    fallback: <Loading />,
-  });
-export const Register = loadable(() =>
-  import ('./Pages/Users/Register'), {
-    fallback: <Loading />,
-  });
-export const RegisterV2 = loadable(() =>
-  import ('./Pages/Users/RegisterV2'), {
-    fallback: <Loading />,
-  });
-export const RegisterV3 = loadable(() =>
-  import ('./Pages/Users/RegisterV3'), {
     fallback: <Loading />,
   });
 export const ComingSoon = loadable(() =>

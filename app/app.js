@@ -17,8 +17,13 @@ import FontFaceObserver from 'fontfaceobserver';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 
-// Import root app
+// Import apollo client
+import { ApolloProvider } from '@apollo/client';
 import App from 'containers/App';
+import AuthContextProvider from './context/AuthContextProvider';
+import { client } from './apollo/client';
+
+// Import root app
 import './styles/layout/base.scss';
 
 // Import Language Provider
@@ -46,15 +51,18 @@ openSansObserver.load().then(() => {
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
-
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </LanguageProvider>
+      <ApolloProvider client={client}>
+        <AuthContextProvider>
+          <LanguageProvider messages={messages}>
+            <ConnectedRouter history={history}>
+              <App />
+            </ConnectedRouter>
+          </LanguageProvider>
+        </AuthContextProvider>
+      </ApolloProvider>
     </Provider>,
     MOUNT_NODE,
   );

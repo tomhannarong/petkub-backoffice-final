@@ -15,7 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import AllInclusive from '@material-ui/icons/AllInclusive';
 import Brightness5 from '@material-ui/icons/Brightness5';
-import People from '@material-ui/icons/People';
+import { People, Person } from '@material-ui/icons';
 import ArrowForward from '@material-ui/icons/ArrowForward';
 import Paper from '@material-ui/core/Paper';
 import Icon from '@material-ui/core/Icon';
@@ -60,35 +60,27 @@ function LoginFormV2(props) {
       <div className={classes.topBar}>
         <NavLink to="/" className={classes.brand}>
           <img src={logo} alt={brand.name} />
-          {brand.name}
+          { 'Petkub' }
         </NavLink>
-        <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/register-v2">
-          <Icon className={classes.icon}>arrow_forward</Icon>
-          Create new account
-        </Button>
       </div>
       <Typography variant="h4" className={classes.title} gutterBottom>
         Sign In
       </Typography>
       <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
-        Lorem ipsum dolor sit amet
+        To Petkub Management
       </Typography>
       <section className={classes.socmedSideLogin}>
         <div className={classes.btnArea}>
           <Button variant="outlined" size="small" className={classes.redBtn} type="button">
-            <AllInclusive className={classNames(classes.leftIcon, classes.iconSmall)} />
-            Socmed 1
-          </Button>
-          <Button variant="outlined" size="small" className={classes.blueBtn} type="button">
-            <Brightness5 className={classNames(classes.leftIcon, classes.iconSmall)} />
-            Socmed 2
+            <People className={classNames(classes.leftIcon, classes.iconSmall)} />
+            For Admin
           </Button>
           <Button variant="outlined" size="small" className={classes.cyanBtn} type="button">
-            <People className={classNames(classes.leftIcon, classes.iconSmall)} />
-            Socmed 3
+            <Person className={classNames(classes.leftIcon, classes.iconSmall)} />
+            For Super Admin
           </Button>
         </div>
-        <ContentDivider content="Or sign in with email" />
+        <ContentDivider content="Sign in with email" />
       </section>
       <section className={classes.pageFormSideWrap}>
         <form onSubmit={handleSubmit}>
@@ -162,6 +154,7 @@ const LoginFormReduxed = reduxForm({
 
 const reducerLogin = 'login';
 const reducerUi = 'ui';
+
 const FormInit = connect(
   state => ({
     force: state,
@@ -170,4 +163,5 @@ const FormInit = connect(
   }),
 )(LoginFormReduxed);
 
+// export default withStyles(styles)(FormInit);
 export default withStyles(styles)(FormInit);
