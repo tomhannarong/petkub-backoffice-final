@@ -414,3 +414,10 @@ export const HelpSupport = loadable(() =>
   import ('./Pages/HelpSupport'), {
     fallback: <Loading />,
   });
+
+
+//My Page
+export const SamplePage = loadable(() =>
+  import ('./MyPage/SamplePage'), {
+    fallback: <Loading />,
+  });

@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { ThemeContext } from './ThemeWrapper';
+import Loading from 'dan-components/Loading';
 import Dashboard from '../Templates/Dashboard';
 import {
   PersonalDashboard, CrmDashboard, CryptoDashboard,
@@ -32,7 +33,8 @@ import {
   ProductPage, Invoice, Profile, BlankPage,
   Photos, Pricing, CheckoutPage, Error, Settings,
   HelpSupport, MapMarker, MapDirection, SearchMap,
-  TrafficIndicator, StreetViewMap, NotFound
+  TrafficIndicator, StreetViewMap, NotFound,
+  SamplePage
 } from '../pageListAsync';
 
 import { AuthContext } from '../../context/AuthContextProvider';
@@ -41,31 +43,40 @@ import { ME } from '../../apollo/queries';
 
 function Application(props) {
   const { history } = props;
+  const { loading, error, data } = useQuery(ME , {errorPolicy: 'all' , fetchPolicy: 'network-only'});
   const { loggedInUser, setAuthUser } = useContext(AuthContext);
   const changeMode = useContext(ThemeContext);
-  const [IsAuthContextIf, setIsAuthContextIf] = useState(false);
 
-  setInterval(() => {
-    setIsAuthContextIf(true);
-  }, 500);
-
-  // Check user admin login success.
   useEffect(() => {
-    try {
-      if (IsAuthContextIf) {
-        if (loggedInUser) {
-          console.log('loggedInUser: ', loggedInUser);
-        }
-        if (!loggedInUser) {
-          window.location.href = '/';
-        }
-      }
-    } catch (error) {
-      throw error;
-    }
-  }, [IsAuthContextIf]);
+    if(error) window.location.href = '/'
+  }, [error])
 
-  return (
+  useEffect(() => {
+    if (data){
+      setAuthUser(data.me)
+    }else{
+      setAuthUser(null)
+    }
+    
+  }, [data]);
+
+  useEffect(() => {
+    if(loading){
+      console.log("user admin loading ...")
+    }else{
+      console.log("user admin loading complete")
+      if(loggedInUser) console.log("User admin connected.")
+    }
+
+    
+  }, [loggedInUser])
+  
+
+  return loading ? (
+    <Loading />
+  ) : error ? (
+    <Loading />
+  ) :  (
     <Dashboard history={history} changeMode={changeMode}>
       <Switch>
         { /* Home */ }
@@ -171,6 +182,10 @@ function Application(props) {
         <Route path="/app/maps/map-searchbox" component={SearchMap} />
         <Route path="/app/maps/map-traffic" component={TrafficIndicator} />
         <Route path="/app/maps/street-view" component={StreetViewMap} />
+
+        { /* My Page */ }
+        <Route exact path="/app/mypage/sample-page" component={SamplePage} />
+
         { /* Default */ }
         <Route component={NotFound} />
       </Switch>

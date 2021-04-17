@@ -139,3 +139,7 @@ export AddBoard from './TaskBoard/AddBoard';
 export ErrorWrap from './Error/ErrorWrap';
 // Theme an Layout Settings
 export TemplateSettings from './TemplateSettings';
+
+//My Component
+export SampleComponent from './MyComponent/SampleComponent';
+

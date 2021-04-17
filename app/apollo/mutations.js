@@ -15,8 +15,10 @@ export const SIGN_UP = gql`
 export const SIGN_IN = gql`
   mutation SIGN_IN($email: String!, $password: String!) {
     signin(
-        email: $email,
+      Data: {
+        email: $email
         password: $password
+        }
     ){
         userId
         accessToken
