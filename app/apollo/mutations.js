@@ -80,3 +80,14 @@ export const CREATE_PETTYPE = gql`
     }
   }
 `;
+
+export const REFRESH_TOKEN = gql`
+  mutation REFRESH_TOKEN($refreshToken: String!) {
+    refreshToken(refreshToken: $refreshToken) {
+      userId
+      accessToken
+      refreshToken
+      expiresIn
+    }
+  }
+`;

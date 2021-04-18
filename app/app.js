@@ -21,7 +21,7 @@ import 'sanitize.css/sanitize.css';
 import { ApolloProvider } from '@apollo/client';
 import App from 'containers/App';
 import AuthContextProvider from './context/AuthContextProvider';
-import { client } from './apollo/client';
+import client from './apollo/client';
 
 // Import root app
 import './styles/layout/base.scss';

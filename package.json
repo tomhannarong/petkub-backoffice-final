@@ -145,6 +145,7 @@
     "js-cookie": "^2.2.1",
     "jss": "^10.0.0",
     "jss-rtl": "^0.3.0",
+    "jwt-decode": "^3.1.2",
     "keycode": "^2.2.0",
     "lodash": "^4.17.20",
     "minimist": "^1.2.5",
