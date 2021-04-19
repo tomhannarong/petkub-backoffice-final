@@ -10,7 +10,15 @@ const initialState = {
 export const AuthContext = createContext(initialState);
 
 const AuthContextProvider = ({ children }) => {
+
+  const { loading, error, data } = useQuery(ME , {errorPolicy: 'all' , fetchPolicy: 'network-only'});
   const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    if (data){
+      setLoggedInUser(data.me)
+    } 
+  }, [data]);
 
   useEffect(() => {
     const syncSignout = (e) => {

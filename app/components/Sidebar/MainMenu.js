@@ -37,6 +37,7 @@ function MainMenu(props) {
   } = props;
 
   const getMenus = menuArray => menuArray.map((item, index) => {
+    
     if (item.child || item.linkParent) {
       return (
         <div key={index.toString()}>

@@ -34,7 +34,7 @@ import jwt_decode from "jwt-decode";
     })
 
     return {accessToken , refreshToken};
-  };
+  };  
 
   const authMiddleware = new ApolloLink((operation, forward) => {
   
@@ -72,6 +72,7 @@ import jwt_decode from "jwt-decode";
                 return fromPromise(
                   getNewToken()
                     .then(({ accessToken, refreshToken }) => {
+                      
                       // Set Cookie in browser
                       setCookie('accessToken', accessToken);
                       setCookie('refreshToken', refreshToken);
@@ -93,6 +94,7 @@ import jwt_decode from "jwt-decode";
                   operation.setContext({
                     headers: {
                       ...oldHeaders,
+                      Accept: 'application/json',
                       authorization: `Bearer ${accessToken}`,
                     },
                   });
@@ -100,13 +102,15 @@ import jwt_decode from "jwt-decode";
                   return forward(operation);
                 });
               }
+            }else {
+              console.log("token not found")
+              
             }
 
           default: 
           console.log(
             `[GraphQL error]: Message: ${err.message}, Code: ${err.extensions.code}, Path: ${err.path}`
-          )
-            
+          ) 
         }
       }
       // graphQLErrors.forEach(({ message, locations, path }) => 

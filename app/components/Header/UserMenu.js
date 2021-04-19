@@ -55,9 +55,6 @@ function UserMenu(props) {
     try {
       const response = await signout();
       if (response.data) {
-        if (!loggedInUser) console.log('loggedInUser: null');
-        if (!loggedInUser) console.log('Date.now().toString()');
-
         // Set auth user to null
         setAuthUser(null);
 

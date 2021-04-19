@@ -16,11 +16,12 @@ import { isSuperAdmin, isAdmin } from '../../../helpers/authHelpers';
 
 
 function LoginV2(props) {
-  const { setAuthUser, loggedInUser } = useContext(AuthContext);
+  const { loggedInUser, setAuthUser } = useContext(AuthContext);
   const [cookieLocal, setCookieLocal] = useState('');
 
   const [signin] = useMutation(SIGN_IN);
-  const meQuery = useQuery(ME, { fetchPolicy: 'network-only' });
+  const meQuery = useQuery(ME, { fetchPolicy: 'network-only', errorPolicy: 'all', });
+
 
   useEffect(() => {
     try {

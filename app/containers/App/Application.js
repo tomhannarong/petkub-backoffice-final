@@ -54,23 +54,11 @@ function Application(props) {
   useEffect(() => {
     if (data){
       setAuthUser(data.me)
-    }else{
-      setAuthUser(null)
     }
-    
+    // else{
+    //   setAuthUser(null)
+    // }
   }, [data]);
-
-  useEffect(() => {
-    if(loading){
-      console.log("user admin loading ...")
-    }else{
-      console.log("user admin loading complete")
-      if(loggedInUser) console.log("User admin connected.")
-    }
-
-    
-  }, [loggedInUser])
-  
 
   return loading ? (
     <Loading />
