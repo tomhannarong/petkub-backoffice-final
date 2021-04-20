@@ -106,28 +106,28 @@ import jwt_decode from "jwt-decode";
               console.log("token not found")
               
             }
-          case "ARGUMENT_VALIDATION_ERROR":
-            let Msg = ''
-            for (let {property, value, constraints} of err.extensions.exception.validationErrors) {
-              Msg += '  constraints: '
-              for (let v of Object.values(constraints)) {   
-                Msg += v + ' \n'
-              }
-              Msg += '  property: ' + property + ' \n'
-              Msg += '  value: ' + value + ' \n'
-              Msg += '  # # # # \n'    
-            }
-            console.log(
-              '[GraphQL error]: Message: ' + err.message + ' \n' +
-              'Code: ' + err.extensions.code + ' \n' +
-              'Path: ' + err.path + ' \n' +
-              'Validation Errors: \n' + Msg + ' \n' 
-            ) 
+          // case "ARGUMENT_VALIDATION_ERROR":
+          //   let Msg = ''
+          //   for (let {property, value, constraints} of err.extensions.exception.validationErrors) {
+          //     Msg += '  constraints: '
+          //     for (let v of Object.values(constraints)) {   
+          //       Msg += v + ' \n'
+          //     }
+          //     Msg += '  property: ' + property + ' \n'
+          //     Msg += '  value: ' + value + ' \n'
+          //     Msg += '  # # # # \n'    
+          //   }
+          //   console.log(
+          //     '[GraphQL error]: Message: ' + err.message + ' \n' +
+          //     'Code: ' + err.extensions.code + ' \n' +
+          //     'Path: ' + err.path + ' \n' +
+          //     'Validation Errors: \n' + Msg + ' \n' 
+          //   ) 
 
-          // default: 
-          // console.log(
-          //   `[GraphQL error]: Message: ${err.message}, Code: ${err.extensions.code}, Path: ${err.path}`
-          // ) 
+          default: 
+          console.log(
+            `[GraphQL error]: Message: ${err.message}, Code: ${err.extensions.code}, Path: ${err.path}`
+          ) 
         }
       }
       // graphQLErrors.forEach(({ message, locations, path }) => 

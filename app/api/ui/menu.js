@@ -1,5 +1,26 @@
 module.exports = [
   {
+    key: 'users',
+    name: 'User Manage',
+    icon: 'ios-contact-outline',
+    child: [
+      {
+        key: 'users',
+        name: 'Users',
+        link: '/app/mypage/sample-page',
+        badge: 'Hot',
+        icon: 'ios-people-outline'
+      },
+      {
+        key: 'creative',
+        name: 'Creative',
+        link: '/landing-creative',
+        icon: 'ios-desktop-outline'
+      },
+    ]
+  },
+  // menu Home
+  {
     key: 'home',
     name: 'Home',
     icon: 'ios-home-outline',
@@ -105,6 +126,7 @@ module.exports = [
       }
     ]
   },
+  // menu Applications
   {
     key: 'apps',
     name: 'Applications',
@@ -194,6 +216,7 @@ module.exports = [
       },
     ]
   },
+  // menu Pages
   {
     key: 'pages',
     name: 'Pages',
@@ -341,6 +364,7 @@ module.exports = [
       },
     ]
   },
+  // menu Tables
   {
     key: 'tables',
     name: 'Tables',
@@ -388,6 +412,7 @@ module.exports = [
       },
     ]
   },
+  // menu Forms Buttons
   {
     key: 'forms',
     name: 'Forms Buttons',
@@ -499,6 +524,7 @@ module.exports = [
       },
     ]
   },
+  // menu UI Collection
   {
     key: 'ui',
     name: 'UI Collection',
@@ -673,6 +699,7 @@ module.exports = [
       },
     ]
   },
+  // menu Charts
   {
     key: 'charts',
     name: 'Charts',
@@ -762,6 +789,7 @@ module.exports = [
       },
     ]
   },
+  // menu Maps
   {
     key: 'maps',
     name: 'Maps',
@@ -804,6 +832,7 @@ module.exports = [
       },
     ]
   },
+  // menu Menu Levels
   {
     key: 'menu_levels',
     name: 'Menu Levels',
@@ -834,6 +863,7 @@ module.exports = [
       },
     ]
   },
+  // menu One Level Menu
   {
     key: 'no_child',
     name: 'One Level Menu',

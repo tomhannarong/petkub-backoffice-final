@@ -41,6 +41,7 @@ import { AuthContext } from '../../context/AuthContextProvider';
 import { isSuperAdmin, isAdmin } from '../../helpers/authHelpers';
 import { ME } from '../../apollo/queries';
 import { SIGN_UP } from '../../apollo/mutations';
+import { is } from 'immutable';
 
 function Application(props) {
   const { history } = props;
@@ -55,27 +56,48 @@ function Application(props) {
   }, [error])
 
   const getSignup = async () => {
+    try {
       const variables = {
         fname:"123123" ,
-        lname:"44444" ,
-        email: "1231dasgfas@g" ,
+        lname:"" ,
+        email: "" ,
         password: "123123123" ,
         passwordConfirm: "123123"
       }
 
-      await signup ({ variables }).then((response)=>{
-        if(response ) console.log("signup : ",response.data.signup)
-      }).catch((error)=>{
-        if(error ) console.log("error : ",signupErr)
-      })
+      const {data} = await signup ({ variables })
+
+      if(response ) console.log("signup123 : ",data)
+
+    } catch (error) {
+      
+        // error.graphQLErrors[0].extensions.exception.validationErrors.map(({constraints,property}, index)=>{
+        //   console.log("error property: " , property)
+        //   for (let v of Object.values(constraints)) {   
+        //     console.log("error constraints: " , v)   
+        //   }
+        // })
+    }
+      
 
   }
+
+  useEffect(() => {
+    if(signupErr.error){
+      signupErr.error.graphQLErrors[0].extensions.exception.validationErrors.map(({constraints,property}, index)=>{
+        console.log("error property: " , property)
+        console.log("error constraints: " , Object.values(constraints)[0])   
+      })
+    }
+  }, [signupErr.error])
+
   useEffect(() => {
     if (data){
       setAuthUser(data.me)
     }
     
     getSignup()
+    
 
     // else{
     //   setAuthUser(null)
