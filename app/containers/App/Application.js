@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { ThemeContext } from './ThemeWrapper';
 import Loading from 'dan-components/Loading';
 import Dashboard from '../Templates/Dashboard';
@@ -40,6 +40,7 @@ import {
 import { AuthContext } from '../../context/AuthContextProvider';
 import { isSuperAdmin, isAdmin } from '../../helpers/authHelpers';
 import { ME } from '../../apollo/queries';
+import { SIGN_UP } from '../../apollo/mutations';
 
 function Application(props) {
   const { history } = props;
@@ -47,14 +48,35 @@ function Application(props) {
   const { loggedInUser, setAuthUser } = useContext(AuthContext);
   const changeMode = useContext(ThemeContext);
 
+  const [signup, signupErr] = useMutation(SIGN_UP);
+
   useEffect(() => {
     if(error) window.location.href = '/'
   }, [error])
 
+  const getSignup = async () => {
+      const variables = {
+        fname:"123123" ,
+        lname:"44444" ,
+        email: "1231dasgfas@g" ,
+        password: "123123123" ,
+        passwordConfirm: "123123"
+      }
+
+      await signup ({ variables }).then((response)=>{
+        if(response ) console.log("signup : ",response.data.signup)
+      }).catch((error)=>{
+        if(error ) console.log("error : ",signupErr)
+      })
+
+  }
   useEffect(() => {
     if (data){
       setAuthUser(data.me)
     }
+    
+    getSignup()
+
     // else{
     //   setAuthUser(null)
     // }
