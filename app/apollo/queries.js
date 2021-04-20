@@ -17,8 +17,27 @@ export const ME = gql`
 
 export const QUERY_USERS = gql`
   query {
-    users {
-        id
+    users{
+      id
+      email
+      personalInformation{
+        fname
+        lname
+        birthday
+        gender
+      }
+      contact{
+        name
+        phone
+        facebook
+        line
+        instagram
+      }
+      profileImg
+      roles
+      createdAt
+      updatedAt
+      deletedAt
     }
   }
 `;

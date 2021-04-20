@@ -7,16 +7,10 @@ module.exports = [
       {
         key: 'users',
         name: 'Users',
-        link: '/app/mypage/sample-page',
+        link: '/app/users',
         badge: 'Hot',
         icon: 'ios-people-outline'
-      },
-      {
-        key: 'creative',
-        name: 'Creative',
-        link: '/landing-creative',
-        icon: 'ios-desktop-outline'
-      },
+      }
     ]
   },
   // menu Home

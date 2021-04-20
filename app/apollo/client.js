@@ -102,9 +102,6 @@ import jwt_decode from "jwt-decode";
                   return forward(operation);
                 });
               }
-            }else {
-              console.log("token not found")
-              
             }
           // case "ARGUMENT_VALIDATION_ERROR":
           //   let Msg = ''

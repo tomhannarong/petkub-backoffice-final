@@ -34,7 +34,7 @@ import {
   Photos, Pricing, CheckoutPage, Error, Settings,
   HelpSupport, MapMarker, MapDirection, SearchMap,
   TrafficIndicator, StreetViewMap, NotFound,
-  SamplePage
+  SamplePage, Users
 } from '../pageListAsync';
 
 import { AuthContext } from '../../context/AuthContextProvider';
@@ -217,6 +217,10 @@ function Application(props) {
 
         { /* My Page */ }
         <Route exact path="/app/mypage/sample-page" component={SamplePage} />
+
+        { /* Users Page */ }
+        <Route exact path="/app/users" component={Users} />
+        
 
         { /* Default */ }
         <Route component={NotFound} />

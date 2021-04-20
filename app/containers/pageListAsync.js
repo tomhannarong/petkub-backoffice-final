@@ -421,3 +421,9 @@ export const SamplePage = loadable(() =>
   import ('./MyPage/SamplePage'), {
     fallback: <Loading />,
   });
+
+// User Page
+  export const Users = loadable(() =>
+  import ('./Users'), {
+    fallback: <Loading />,
+  });
