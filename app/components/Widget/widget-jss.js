@@ -685,6 +685,24 @@ const styles = theme => ({
       backgroundImage: `url(${images[18]})`,
       backgroundPosition: '0 -120px'
     }
+  },
+  // table users 
+  usersTableStyle: {
+    '& > div': {
+      overflow: 'auto'
+    },
+    '& table': {
+      '& td': {
+        wordBreak: 'keep-all'
+      },
+      [theme.breakpoints.down('md')]: {
+        '& td': {
+          height: 60,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }
+      }
+    }
   }
 });
 
