@@ -13,6 +13,27 @@ module.exports = [
       }
     ]
   },
+
+  {
+    key: 'master_data',
+    name: 'Master Data',
+    icon: 'ios-list-box-outline',
+    child: [
+      {
+        key: 'petTypes',
+        name: 'Pet Type',
+        link: '/app/master-data/pet-type',
+        icon: 'ios-people-outline'
+      },
+      {
+        key: 'petBreeds',
+        name: 'Pet Breed',
+        link: '/app/master-data/pet-breed',
+        icon: 'ios-people-outline'
+      }
+    ]
+  },
+
   // menu Home
   {
     key: 'home',

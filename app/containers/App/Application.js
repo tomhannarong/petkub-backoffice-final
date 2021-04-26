@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { ThemeContext } from './ThemeWrapper';
 import Loading from 'dan-components/Loading';
+import { ThemeContext } from './ThemeWrapper';
 import Dashboard from '../Templates/Dashboard';
 import {
   PersonalDashboard, CrmDashboard, CryptoDashboard,
@@ -34,7 +34,7 @@ import {
   Photos, Pricing, CheckoutPage, Error, Settings,
   HelpSupport, MapMarker, MapDirection, SearchMap,
   TrafficIndicator, StreetViewMap, NotFound,
-  SamplePage, Users
+  SamplePage, Users, PetBreed, PetType
 } from '../pageListAsync';
 
 import { AuthContext } from '../../context/AuthContextProvider';
@@ -43,24 +43,24 @@ import { ME } from '../../apollo/queries';
 
 function Application(props) {
   const { history } = props;
-  const { loading, error, data } = useQuery(ME , {errorPolicy: 'all' , fetchPolicy: 'network-only'});
+  const { loading, error, data } = useQuery(ME, { errorPolicy: 'all', fetchPolicy: 'network-only' });
   const { loggedInUser, setAuthUser } = useContext(AuthContext);
   const changeMode = useContext(ThemeContext);
 
   useEffect(() => {
-    if(error) window.location.href = '/'
-  }, [error])
+    if (error) window.location.href = '/';
+  }, [error]);
 
-        // error.graphQLErrors[0].extensions.exception.validationErrors.map(({constraints,property}, index)=>{
-        //   console.log("error property: " , property)
-        //   for (let v of Object.values(constraints)) {   
-        //     console.log("error constraints: " , v)   
-        //   }
-        // })
+  // error.graphQLErrors[0].extensions.exception.validationErrors.map(({constraints,property}, index)=>{
+  //   console.log("error property: " , property)
+  //   for (let v of Object.values(constraints)) {
+  //     console.log("error constraints: " , v)
+  //   }
+  // })
 
   useEffect(() => {
-    if (data){
-      setAuthUser(data.me)
+    if (data) {
+      setAuthUser(data.me);
     }
   }, [data]);
 
@@ -68,7 +68,7 @@ function Application(props) {
     <Loading />
   ) : error ? (
     <Loading />
-  ) :  (
+  ) : (
     <Dashboard history={history} changeMode={changeMode}>
       <Switch>
         { /* Home */ }
@@ -180,7 +180,11 @@ function Application(props) {
 
         { /* Users Page */ }
         <Route exact path="/app/users" component={Users} />
-        
+
+        { /* Master Data */ }
+        <Route exact path="/app/master-data/pet-type" component={PetType} />
+        <Route exact path="/app/master-data/pet-breed" component={PetBreed} />
+
 
         { /* Default */ }
         <Route component={NotFound} />

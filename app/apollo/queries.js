@@ -2,10 +2,10 @@ import { gql } from '@apollo/client';
 
 export const ME = gql`
   query {
-    me{
+    me {
       id
       email
-      personalInformation{
+      personalInformation {
         fname
         lname
       }
@@ -17,16 +17,16 @@ export const ME = gql`
 
 export const QUERY_USERS = gql`
   query {
-    users{
+    users {
       id
       email
-      personalInformation{
+      personalInformation {
         fname
         lname
         birthday
         gender
       }
-      contact{
+      contact {
         name
         phone
         facebook
@@ -38,6 +38,34 @@ export const QUERY_USERS = gql`
       createdAt
       updatedAt
       deletedAt
+    }
+  }
+`;
+
+export const QUERY_PEY_TYPES = gql`
+  query {
+    petTypes {
+      id
+      name
+      createdAt
+      deletedAt
+      updatedAt
+    }
+  }
+`;
+
+export const QUERY_PEY_BREEDS = gql`
+  query {
+    petBreeds {
+      id
+      name
+      petType {
+        id
+        name
+      }
+      createdAt
+      deletedAt
+      updatedAt
     }
   }
 `;
