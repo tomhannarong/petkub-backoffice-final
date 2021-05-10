@@ -142,7 +142,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Users(props) {
     const { classes, width } = props;
-    const classesLocal = useStyles();
+    const classesLocal = useStyles()
 
     // Add Show Password
     const [showPassword, setShowPassword] = useState(false);
@@ -179,28 +179,28 @@ function Users(props) {
         setsnackbarSuccessOpen(false)
     };
 
+    const getDataQuery = (data) => {
+        for (let v of data.users) {
+            const {fname, lname} = v.personalInformation
+            let _arr = []
+            
+            _arr.push(v.profileImg ? v.profileImg : '-')
+            _arr.push(`${fname?fname:'-'} ${lname?lname:'-'}`)
+            _arr.push(v.email)
+            _arr.push(Math.floor(Math.random() * 101))
+            _arr.push(v.roles)
+            _arr.push(v.deletedAt?'non-active':'active')
+            
+            setdataUser( dataUser => [...dataUser, _arr]);
+        }   
+    }
+
     useEffect(() => {
         if (data){
-            for (let v of data.users) {
-                const {fname, lname} = v.personalInformation
-                let _arr = []
-                _arr.push(v.profileImg ? v.profileImg : '-')
-                _arr.push(`${fname?fname:'-'} ${lname?lname:'-'}`)
-                _arr.push(v.email)
-                _arr.push(Math.floor(Math.random() * 101))
-                _arr.push(v.roles)
-                _arr.push(v.deletedAt?'non-active':'active')
-                
-                setdataUser( dataUser => [...dataUser, _arr]);
-            }   
+            getDataQuery(data)
         }
-    }, [data]);
         
-    useEffect(() => {
-        if(!signupErr){
-            refetch()
-        }
-    }, [signup])
+    }, [data]);
 
     useEffect(() => {
         if(signupErr.error){
@@ -276,6 +276,28 @@ function Users(props) {
                 }
                 return (<Chip label="Unknown" />);
             }
+            }
+        },
+        {
+            name: 'Actions',
+            options: {
+            filter: false,
+            customBodyRender: (value) => (
+                <>
+                <Tooltip title="user edit" placement="bottom">
+                    <IconButton className={classes.button} >
+                    <i className="ion-edit" />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="user delete" placement="bottom">
+                    <IconButton className={classes.button} onClick={()=> alert("123123")}>
+                    <i className="ion-ios-trash-outline" />
+                    </IconButton>
+                </Tooltip>
+                {/* <LinearProgress variant="determinate" color="secondary" value={value} /> */}
+                </>
+                
+            )
             }
         },
     ];
@@ -475,10 +497,16 @@ return loading ? (
                                 // setSubmitting(true)
                                 // await new Promise(resolve => setTimeout(resolve, 1000));
                                 const variables = { fname, lname, email, password, passwordConfirm }
-                                signup({ variables }).then((res)=>{
+                                signup({ variables }).then(async(res)=>{
                                     handleSuccessClose()
                                     handleSuccessOpen()
-                                    refetch()
+                                    
+                                    await refetch().then((response) => response.data).then((result) => {
+                                        setdataUser([])
+                                        getDataQuery(result)
+                                    })
+                                    handleClose()
+
                                     setMessageError("")
                                     setSubmitting(false);
                                 }).catch(()=>{
