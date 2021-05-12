@@ -50,7 +50,7 @@ import { Formik, Form, Field } from "formik";
 // Import Apollo
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USERS } from './../../apollo/queries';
-import { SIGN_UP } from './../../apollo/mutations';
+import { SIGN_UP, DELETE_USER } from './../../apollo/mutations';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -154,16 +154,33 @@ function Users(props) {
     const handleClickShowPasswordConfirm = () => setShowPasswordConfirm(!ShowPasswordConfirm);
     const handleMouseDownPasswordConfirm = () => setShowPasswordConfirm(!ShowPasswordConfirm);
 
+    const [DialogConfirm, setDialogConfirmOpen] = useState(false);
+    const [UserId, setUserId] = useState(null)
+
+    function handleClickDialogConfirmOpen(userId) {
+        setDialogConfirmOpen(true);
+        setUserId(userId)
+    }
+
+    function handleDialogConfirmClose() {
+        setDialogConfirmOpen(false);
+        setUserId(null)
+    }
+
     const title = 'Dandelion Pro. Blank Page';
     const description = 'Dandelion Pro';
 
     const { loading, error, data, refetch } = useQuery(QUERY_USERS , {errorPolicy: 'all' , fetchPolicy: 'network-only'});
+
+
     const [dataUser, setdataUser] = useState([])
     const [open, setOpen] = useState(false)
     const [messageError, setMessageError] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("")
     const [snackbarSuccessOpen, setsnackbarSuccessOpen] = useState(false)
 
     const [signup, signupErr] = useMutation(SIGN_UP);
+    const [deleteUserMutation, deleteUserErr] = useMutation(DELETE_USER);
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -179,6 +196,20 @@ function Users(props) {
         setsnackbarSuccessOpen(false)
     };
 
+    const deleteUser = (userId) => {
+        const variables = { userId }
+        deleteUserMutation({ variables }).then( async (res)=>{ 
+            await refetch().then((response) => response.data).then((result) => {
+                setdataUser([])
+                getDataQuery(result)
+            })
+            setMessageSuccess(res.data.deleteUser.message) 
+            handleSuccessOpen()
+            
+            handleDialogConfirmClose()
+        })
+    }
+
     const getDataQuery = (data) => {
         for (let v of data.users) {
             const {fname, lname} = v.personalInformation
@@ -190,6 +221,9 @@ function Users(props) {
             _arr.push(Math.floor(Math.random() * 101))
             _arr.push(v.roles)
             _arr.push(v.deletedAt?'non-active':'active')
+            _arr.push(v.id)
+            
+            // console.log(v)
             
             setdataUser( dataUser => [...dataUser, _arr]);
         }   
@@ -284,19 +318,12 @@ function Users(props) {
             filter: false,
             customBodyRender: (value) => (
                 <>
-                <Tooltip title="user edit" placement="bottom">
-                    <IconButton className={classes.button} >
-                    <i className="ion-edit" />
-                    </IconButton>
-                </Tooltip>
                 <Tooltip title="user delete" placement="bottom">
-                    <IconButton className={classes.button} onClick={()=> alert("123123")}>
+                    <IconButton className={classes.button} onClick={()=>handleClickDialogConfirmOpen(value)}>
                     <i className="ion-ios-trash-outline" />
                     </IconButton>
                 </Tooltip>
-                {/* <LinearProgress variant="determinate" color="secondary" value={value} /> */}
                 </>
-                
             )
             }
         },
@@ -318,22 +345,7 @@ function Users(props) {
                     <DialogContentText>
                         Add new user admin for Service and Our clients support.  
                     </DialogContentText>
-                    <Snackbar
-                        anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                        }}
-                        open={snackbarSuccessOpen}
-                        autoHideDuration={6000}
-                        onClose={handleSuccessClose}
-                    >
-                        <MySnackbarContentWrapper
-                            variant="success"
-                            className={classesLocal.field}
-                            onClose={handleSuccessClose}
-                            message={"Create a New Admin User Success"}
-                        />
-                    </Snackbar>
+                    
 
                     {messageError && (  
                         <Alert severity="error" className={classesLocal.field}>{messageError}</Alert>
@@ -494,11 +506,11 @@ return loading ? (
                             }}
                             initialValues={{ fname: "", lname: "", email: "", password: "", passwordConfirm: ""}}
                             onSubmit={ ({ fname, lname, email, password, passwordConfirm}, { setSubmitting }) => {
-                                // setSubmitting(true)
-                                // await new Promise(resolve => setTimeout(resolve, 1000));
+
                                 const variables = { fname, lname, email, password, passwordConfirm }
                                 signup({ variables }).then(async(res)=>{
                                     handleSuccessClose()
+                                    setMessageSuccess("Create a New Admin User Success") 
                                     handleSuccessOpen()
                                     
                                     await refetch().then((response) => response.data).then((result) => {
@@ -524,6 +536,47 @@ return loading ? (
                         </Formik>
                     </Dialog>
 
+                    <Dialog
+                        open={DialogConfirm}
+                        onClose={handleDialogConfirmClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                        {'Confirm to delete?'}
+                        </DialogTitle>
+                        <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure you want to delete the user account.
+                        </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleDialogConfirmClose} color="primary">
+                            Disagree
+                        </Button>
+                        <Button onClick={() => deleteUser(UserId)} color="primary" autoFocus>
+                            Agree
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
+                    
+                    <Snackbar
+                        anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                        }}
+                        open={snackbarSuccessOpen}
+                        autoHideDuration={10000}
+                        onClose={handleSuccessClose}
+                    >
+                        <MySnackbarContentWrapper
+                            variant="success"
+                            className={classesLocal.field}
+                            onClose={handleSuccessClose}
+                            message={messageSuccess}
+                        />
+                    </Snackbar>
+                    
                     <div className={classes.usersTableStyle}>
                         <MUIDataTable
                             title="Users Data"
